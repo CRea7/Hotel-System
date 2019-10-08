@@ -6,3 +6,5 @@ const guests = [
 ];
 
 module.exports = guests;
+
+    //{id: 0, name: "aaron clarke", people: 4, roomno: 78, breakfast: false, roomtype: "family", check: "waiting"}
