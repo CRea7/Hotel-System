@@ -1,22 +1,48 @@
 let guests = require('../models/guests');
 let express = require('express');
 let router = express.Router();
+let mongoose = require('mongoose');
 
+
+
+mongoose.connect('mongodb://localhost:27017/hoteldb');
+
+let db = mongoose.connection;
+
+db.on('error', function (err) {
+    console.log('Unable to Connect to [ ' + db.name + ' ]', err);
+});
+
+db.once('open', function () {
+    console.log('Successfully Connected to [ ' + db.name + ' ]');
+});
 
 router.findAll = (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(guests,null,5));
     // Return a JSON representation of our list
-    //res.json(donations);
+    res.setHeader('Content-Type', 'application/json');
+
+    guests.find(function(err, guests) {
+        if (err)
+            res.send(err);
+
+        res.send(JSON.stringify(guests,null,5));
+    });
 }
 
+
+// router.findAll = (req, res) => {
+//     res.setHeader('Content-Type', 'application/json');
+//     res.send(JSON.stringify(guests,null,5));
+//     // Return a JSON representation of our list
+//     //res.json(donations);
+// }
+
 router.addGuest = (req, res) => {
-    //Add a new donation to our list
+    //Adding a guest. keeps check in at waiting as guest will check in at desk
     var id = Math.floor((Math.random() * 1000000) + 1); //Randomly generate an id
     var check = 'waiting';
 
     var guest = ({"id" : id, "name" : req.body.name, people : req.body.people, "roomno" : req.body.roomno, "breakfast" : req.body.breakfast, "roomtype" : req.body.roomtype, "check" : check});
-    //var donation = ({"id" : id, "paymenttype" : req.body.paymenttype, "amount" : req.body.amount, "upvotes" : 0});
     var currentSize = guests.length;
 
     guests.push(guest);
