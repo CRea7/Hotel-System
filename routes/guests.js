@@ -29,6 +29,21 @@ router.findAll = (req, res) => {
     });
 }
 
+router.findOne = (req, res) => {
+
+    res.setHeader('Content-Type', 'application/json');
+
+    guests.find({"_id": req.params.id}, function (err,guest) {
+        if (err)
+            res.send(err);
+        // return a suitable error message
+        else
+            res.send(JSON.stringify(guest, null, 5));
+
+        // return the donation
+    });
+}
+
 
 // router.findAll = (req, res) => {
 //     res.setHeader('Content-Type', 'application/json');
