@@ -26,7 +26,8 @@ app.use('/users', usersRouter);
 app.get('/guests', guestsRouter.findAll);
 app.get('/guests/:id', guestsRouter.findOne);
 
-app.put('/guests/:id', guestsRouter.checkGuest);
+app.put('/guests/in/:id', guestsRouter.checkGuestIn);
+app.put('/guests/out/:id', guestsRouter.checkGuestOut);
 
 app.post('/guests', guestsRouter.addGuest);
 

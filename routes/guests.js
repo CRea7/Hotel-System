@@ -54,7 +54,7 @@ router.deleteGuest = (req, res) => {
     });
 }
 
-router.checkGuest = (req, res) => {
+router.checkGuestIn = (req, res) => {
 
     guests.findById({"_id": req.params.id}, function(err,guest) {
         if (err)
@@ -66,6 +66,23 @@ router.checkGuest = (req, res) => {
                     res.json({message:'could not check guest in!'});
                 else
                     res.json({message:'Guest checked in!'});
+            });
+        }
+    });
+}
+
+router.checkGuestOut = (req, res) => {
+
+    guests.findById({"_id": req.params.id}, function(err,guest) {
+        if (err)
+            res.json({message:'could not find Guest'});
+        else {
+            guest.check = "out";
+            guest.save(function (err) {
+                if (err)
+                    res.json({message:'could not check guest ouy!'});
+                else
+                    res.json({message:'Guest checked out!'});
             });
         }
     });
