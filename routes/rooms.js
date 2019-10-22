@@ -40,7 +40,16 @@ router.findAll = (req, res) => {
         res.send(JSON.stringify(rooms,null,5));
     });
 }
-//formatting test2
+
+router.deleteRoom = (req, res) => {
+
+    Rooms.findByIdAndRemove({"_id": req.params.id}, function(err) {
+        if (err)
+            res.json({message:'Room not deleted!'});
+        else
+            res.json({message:'Room deleted!'});
+    });
+}
 
 
 module.exports = router;

@@ -26,9 +26,16 @@ app.use('/users', usersRouter);
 app.get('/guests', guestsRouter.findAll);
 app.get('/guests/:id', guestsRouter.findOne);
 
+app.put('/guests/:id', guestsRouter.checkGuest);
+
 app.post('/guests', guestsRouter.addGuest);
 
 app.delete('/guests/:id', guestsRouter.deleteGuest);
+
+//room routes
+app.get('/rooms', roomsRouter.findAll);
+
+app.delete('/rooms/:id', roomsRouter.deleteRoom);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

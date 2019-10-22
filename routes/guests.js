@@ -54,6 +54,23 @@ router.deleteGuest = (req, res) => {
     });
 }
 
+router.checkGuest = (req, res) => {
+
+    guests.findById({"_id": req.params.id}, function(err,guest) {
+        if (err)
+            res.json({message:'could not find Guest'});
+        else {
+            guest.check = "in";
+            guest.save(function (err) {
+                if (err)
+                    res.json({message:'could not check guest in!'});
+                else
+                    res.json({message:'Guest checked in!'});
+            });
+        }
+    });
+}
+
 router.addGuest = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
