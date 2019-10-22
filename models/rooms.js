@@ -10,7 +10,7 @@ let RoomSchema = new mongoose.Schema({
     },
     { collection: 'rooms' });
 
-module.exports = mongoose.model('Room');
+module.exports = mongoose.model('Room', RoomSchema);
 
 
 

@@ -28,6 +28,8 @@ app.get('/guests/:id', guestsRouter.findOne);
 
 app.post('/guests', guestsRouter.addGuest);
 
+app.delete('/guests/:id', guestsRouter.deleteGuest);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

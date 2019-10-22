@@ -29,6 +29,18 @@ router.findAll = (req, res) => {
     });
 }
 
+router.findAll = (req, res) => {
+    // Return a JSON representation of our list
+    res.setHeader('Content-Type', 'application/json');
+
+    Rooms.find(function(err, rooms) {
+        if (err)
+            res.send(err);
+
+        res.send(JSON.stringify(rooms,null,5));
+    });
+}
+
 
 
 module.exports = router;

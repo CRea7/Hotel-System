@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-let RoomSchema = new mongoose.Schema({
+let GuestSchema = new mongoose.Schema({
         name: String,
         people: Number,
         roomno: Number,
@@ -9,9 +9,9 @@ let RoomSchema = new mongoose.Schema({
         check: {type: String, default: "waiting"}
         //upvotes: {type: Number, default: 0}
     },
-    { collection: 'rooms' });
+    { collection: 'guests' });
 
-module.exports = mongoose.model('Room', RoomSchema);
+module.exports = mongoose.model('Guest', GuestSchema);
 
 
 

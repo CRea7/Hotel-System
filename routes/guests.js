@@ -44,29 +44,52 @@ router.findOne = (req, res) => {
     });
 }
 
+router.deleteGuest = (req, res) => {
 
-// router.findAll = (req, res) => {
-//     res.setHeader('Content-Type', 'application/json');
-//     res.send(JSON.stringify(guests,null,5));
-//     // Return a JSON representation of our list
-//     //res.json(donations);
-// }
+    guests.findByIdAndRemove({"_id": req.params.id}, function(err) {
+        if (err)
+            res.json({message:'Guest not deleted!'});
+        else
+            res.json({message:'Guest deleted!'});
+    });
+}
 
 router.addGuest = (req, res) => {
-    //Adding a guest. keeps check in at waiting as guest will check in at desk
-    var id = Math.floor((Math.random() * 1000000) + 1); //Randomly generate an id
-    var check = 'waiting';
 
-    var guest = ({"id" : id, "name" : req.body.name, people : req.body.people, "roomno" : req.body.roomno, "breakfast" : req.body.breakfast, "roomtype" : req.body.roomtype, "check" : check});
-    var currentSize = guests.length;
+    res.setHeader('Content-Type', 'application/json');
 
-    guests.push(guest);
+    var guest = new guests();
 
-    if((currentSize + 1) == guests.length)
-        res.json({ message: 'Guest Added!'});
-    else
-        res.json({ message: 'Guest NOT Added!'});
+    guest.name = req.body.name;
+    guest.people = req.body.people;
+    guest.roomno = req.body.roomno;
+    guest.check = "waiting";
+    guest.breakfast = req.body.breakfast;
+    guest.roomtype = req.body.roomtype;
+
+        guest.save(function(err) {
+                if (err)
+                res.json({ message: 'Guest not added!' });
+                else
+                res.json({ message: 'Guest added!' });
+            });
 }
+
+// router.addGuest = (req, res) => {
+//     //Adding a guest. keeps check in at waiting as guest will check in at desk
+//     var id = Math.floor((Math.random() * 1000000) + 1); //Randomly generate an id
+//     var check = 'waiting';
+//
+//     var guest = ({"id" : id, "name" : req.body.name, people : req.body.people, "roomno" : req.body.roomno, "breakfast" : req.body.breakfast, "roomtype" : req.body.roomtype, "check" : check});
+//     var currentSize = guests.length;
+//
+//     guests.push(guest);
+//
+//     if((currentSize + 1) == guests.length)
+//         res.json({ message: 'Guest Added!'});
+//     else
+//         res.json({ message: 'Guest NOT Added!'});
+// }
 
 function getByValue(array, id) {
     var result  = array.filter(function(obj){return obj.id == id;} );
