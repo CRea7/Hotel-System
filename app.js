@@ -35,6 +35,7 @@ app.delete('/guests/:id', guestsRouter.deleteGuest);
 
 //room routes
 app.get('/rooms', roomsRouter.findAll);
+app.get('/rooms/:id', roomsRouter.findOne);
 
 app.delete('/rooms/:id', roomsRouter.deleteRoom);
 

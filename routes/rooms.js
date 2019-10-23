@@ -41,6 +41,21 @@ router.findAll = (req, res) => {
     });
 }
 
+router.findOne = (req, res) => {
+
+    res.setHeader('Content-Type', 'application/json');
+
+    Rooms.find({"_id": req.params.id}, function (err,room) {
+        if (err)
+            res.send(err);
+        // return a suitable error message
+        else
+            res.send(JSON.stringify(room, null, 5));
+
+        // return the donation
+    });
+}
+
 router.deleteRoom = (req, res) => {
 
     Rooms.findByIdAndRemove({"_id": req.params.id}, function(err) {
