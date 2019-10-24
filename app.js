@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const guestsRouter = require('./routes/guests');
 const roomsRouter = require('./routes/rooms');
+const baseRouter = require('./routes/base');
 
 var app = express();
 
@@ -35,9 +36,13 @@ app.delete('/guests/:id', guestsRouter.deleteGuest);
 
 //room routes
 app.get('/rooms', roomsRouter.findAll);
+app.get('/rooms/empty', roomsRouter.findEmptyRooms);
 app.get('/rooms/:id', roomsRouter.findOne);
 
 app.delete('/rooms/:id', roomsRouter.deleteRoom);
+
+//base routes
+app.put('/rooms/assign/:id', baseRouter.AssignRoom);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

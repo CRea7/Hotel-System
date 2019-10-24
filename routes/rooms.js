@@ -41,6 +41,18 @@ router.findAll = (req, res) => {
     });
 }
 
+router.findEmptyRooms = (req, res) => {
+    // Return a JSON representation of our list
+    res.setHeader('Content-Type', 'application/json');
+
+    Rooms.find({"state":"Ready"},function(err, rooms) {
+        if (err)
+            res.send(err);
+
+        res.send(JSON.stringify(rooms,null,5));
+    });
+}
+
 router.findOne = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
