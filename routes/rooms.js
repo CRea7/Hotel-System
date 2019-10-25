@@ -63,6 +63,28 @@ router.roomReady = (req, res) => {
     });
 }
 
+router.roomMaintain = (req, res) => {
+
+    res.setHeader('content-Type', 'application/json');
+
+    //this is alternative to easier code
+    let check = 0;
+
+    Rooms.findById({"_id": req.params.id}, function (err,room) {
+        if (err)
+            res.send(err);
+        else {
+            room.state ="Maintain";
+            room.save(function (err) {
+                if (err)
+                    res.json({message: 'could not send for maintain'});
+            })
+            res.json({message: 'room scheduled for maintenance!'});
+        }
+
+    });
+}
+
 router.findOne = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');

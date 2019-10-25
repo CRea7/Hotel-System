@@ -38,6 +38,7 @@ app.get('/rooms/empty', roomsRouter.findEmptyRooms);
 app.get('/rooms/:id', roomsRouter.findOne);
 
 app.put('/rooms/ready/:id', roomsRouter.roomReady);
+app.put('/rooms/maintain/:id', roomsRouter.roomMaintain);
 
 app.delete('/rooms/:id', roomsRouter.deleteRoom);
 
