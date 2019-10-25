@@ -27,18 +27,18 @@ router.AssignRoom = (req, res) => {
     let check = 0;
     let roomno;
 
-    Guests.findById({"_id": req.params.id}, function (err,guest) {
+    Guests.findById({"_id": req.params.id}, function (err, guest) {
         if (err)
             res.send(err);
-        else{
+        else {
             //res.json({message: 'found guest'});
             type = guest.roomtype;
             guestname = guest.name;
 
-            Rooms.find({"state":"Ready"},function(err, rooms) {
+            Rooms.find({"state": "Ready"}, function (err, rooms) {
                 if (err)
                     res.send(err);
-                else{
+                else {
                     //res.json({message: 'found rooms'});
                     rooms.forEach(function (room) {
                         if (check === 0 && room.roomtype === type) {
@@ -62,23 +62,61 @@ router.AssignRoom = (req, res) => {
                         //res.json({message: 'it got inside were in'});
                     });
                 }
-                if(check === 0)
+                if (check === 0)
                     res.json({message: 'room could not be found'});
             });
-
-            // if (check === 1) {
-            //     guest.roomno = roomno;
-            //     guest.check = "in";
-            //     guest.save(function (err) {
-            //         if (err)
-            //             res.json({message: 'could not check guest in!'});
-            //     });
-            //     res.json({message: 'room assigned to guest'});
-            // }
         }
     });
+}
+    router.CheckoutRoom = (req, res) => {
+        // Return a JSON representation of our list
+        //res.setHeader('Content-Type', 'application/json');
 
+        let guestname;
+        let type;
+        let check = 0;
+        let roomno;
 
+        Guests.findById({"_id": req.params.id}, function (err, guest) {
+            if (err)
+                res.send(err);
+            else {
+                //res.json({message: 'found guest'});
+                type = guest.roomtype;
+                guestname = guest.name;
+                roomno = guest.roomno;
+
+                Rooms.find({"number": roomno}, function (err, rooms) {
+                    if (err)
+                        res.send(err);
+                    else {
+                        //res.json({message: 'found rooms'});
+                        rooms.forEach(function (room) {
+                            if (check === 0 && room.roomtype === type) {
+
+                                room.state = "Cleaning";
+                                room.guest = "empty";
+                                check = 1;
+                                room.save(function (err) {
+                                    if (err)
+                                        res.json({message: 'could not empty room'});
+                                })
+                                guest.roomno = roomno;
+                                guest.check = "out";
+                                guest.save(function (err) {
+                                    if (err)
+                                        res.json({message: 'could not check guest out!'});
+                                });
+                                res.json({message: 'Guest checked out'});
+                            }
+                            //res.json({message: 'it got inside were in'});
+                        });
+                    }
+                    if (check === 0)
+                        res.json({message: 'room could not be found'});
+                });
+            }
+        });
 }
 
 module.exports = router;

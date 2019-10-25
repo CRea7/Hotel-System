@@ -43,6 +43,7 @@ app.delete('/rooms/:id', roomsRouter.deleteRoom);
 
 //base routes
 app.put('/rooms/assign/:id', baseRouter.AssignRoom);
+app.put('/rooms/checkout/:id', baseRouter.CheckoutRoom);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
