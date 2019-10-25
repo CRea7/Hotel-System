@@ -46,60 +46,23 @@ router.findOne = (req, res) => {
 
 router.deleteGuest = (req, res) => {
 
-    guests.findByIdAndRemove({"_id": req.params.id}, function(err) {
+    guests.findByIdAndRemove({"_id": req.params.id}, function (err) {
         if (err)
-            res.json({message:'Guest not deleted!'});
+            res.json({message: 'Guest not deleted!'});
         else
-            res.json({message:'Guest deleted!'});
+            res.json({message: 'Guest deleted!'});
     });
 }
 
-router.checkGuestIn = (req, res) => {
+router.deleteCheckOut = (req, res) => {
 
-    guests.findById({"_id": req.params.id}, function(err,guest) {
-        if (err)
-            res.json({message:'could not find Guest'});
-        else {
-            guest.check = "in";
-            guest.save(function (err) {
-                if (err)
-                    res.json({message:'could not check guest in!'});
-                else
-                    res.json({message:'Guest checked in!'});
-            });
-        }
+    guests.remove({"check":"out"}, function (err){
+       if (err)
+           res.send(err);
+        else
+            res.json({message: 'Guests deleted!'});
     });
 }
-
-router.checkGuestOut = (req, res) => {
-
-    guests.findById({"_id": req.params.id}, function(err,guest) {
-        if (err)
-            res.json({message:'could not find Guest'});
-        else {
-            guest.check = "out";
-            guest.save(function (err) {
-                if (err)
-                    res.json({message:'could not check guest ouy!'});
-                else
-                    res.json({message:'Guest checked out!'});
-            });
-        }
-    });
-}
-
-// router.findAll = (req, res) => {
-//     // Return a JSON representation of our list
-//     res.setHeader('Content-Type', 'application/json');
-//
-//     guests.find(function(err, guests) {
-//         if (err)
-//             res.send(err);
-//
-//         res.send(JSON.stringify(guests,null,5));
-//     });
-// }
-
 router.addGuest = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');

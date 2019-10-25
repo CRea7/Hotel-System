@@ -27,17 +27,17 @@ app.use('/users', usersRouter);
 app.get('/guests', guestsRouter.findAll);
 app.get('/guests/:id', guestsRouter.findOne);
 
-app.put('/guests/in/:id', guestsRouter.checkGuestIn);
-app.put('/guests/out/:id', guestsRouter.checkGuestOut);
-
 app.post('/guests', guestsRouter.addGuest);
 
+app.delete('/guests/remove', guestsRouter.deleteCheckOut);
 app.delete('/guests/:id', guestsRouter.deleteGuest);
 
 //room routes
 app.get('/rooms', roomsRouter.findAll);
 app.get('/rooms/empty', roomsRouter.findEmptyRooms);
 app.get('/rooms/:id', roomsRouter.findOne);
+
+app.put('/rooms/ready/:id', roomsRouter.roomReady);
 
 app.delete('/rooms/:id', roomsRouter.deleteRoom);
 
