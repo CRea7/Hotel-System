@@ -3,10 +3,12 @@ let Rooms = require('../models/rooms');
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
+require('dotenv')
+    .config();
 
+const connectionString = `$()`
 
-
-mongoose.connect('mongodb+srv://CRea7:BoJack1789@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority');
+mongoose.connect(`mongodb+srv://$(process.env.USER):BoJack1789@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`);
 
 let db = mongoose.connection;
 
