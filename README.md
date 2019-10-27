@@ -8,7 +8,7 @@ It allows the staff to manage the rooms and guests while slos keeping track of w
 when someone approaches the staff they can add them to the system and they can be assigned a room which the system will find based on the amount of people and what kind of room they want. Once the system finds them a room that room is no longer available and they are considered checked in. When they have finished their stay thye system will check them out and assign the room for cleaning. Once the room is clean the staff can make the room available again through the system so it can be assigned to a new guest. the room can also be sent for maintenence if there is a problem which will make that room univailable. once a few guests have been checked out the can all be delted from the system in one go instead of having to manyall delete each person who has checked out.
 
 ## persistance
-The data is stored on a mongodb database which is on my computer. the data is persisted even when the programme is run and stopped. 
+The data is stored on a mongodb database which is hosted using mongo atlas.
 
 ## DX approach
 The goal with this system is to make it as easy as possible to understand so the user would not have to do much work in using the system. the goal was to give the user as little options as possible while still making sure the system can perform all of its functions. using node and mongo was a good experience as from a developers point of view it was simple to use and very easy to expand on.
@@ -18,7 +18,9 @@ The goal with this system is to make it as easy as possible to understand so the
 Web App Labs: https://tutors-design.netlify.com/labs/wit-wad-2-2019.netlify.com
 Mongodb docs: https://docs.mongodb.com/
 ForEach: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+Mongo atlas: https://docs.atlas.mongodb.com/
 
 ## Video Link
 
-https://youtu.be/q2FQWx64aI8
+functionality: https://youtu.be/q2FQWx64aI8
+appendix:      https://youtu.be/lVk_IkkMGZw
