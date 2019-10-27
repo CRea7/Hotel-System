@@ -6,7 +6,7 @@ let mongoose = require('mongoose');
 
 
 
-mongoose.connect('mongodb://localhost:27017/hoteldb');
+mongoose.connect('mongodb+srv://CRea7:BoJack1789@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority');
 
 let db = mongoose.connection;
 
