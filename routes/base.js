@@ -6,9 +6,10 @@ let mongoose = require('mongoose');
 require('dotenv')
     .config();
 
-const connectionString = `$()`
+const connectionString = `mongodb+srv://$(process.env.USER):$(process.env.PASS)@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`;
+console.log(connectionString);
 
-mongoose.connect(`mongodb+srv://$(process.env.USER):BoJack1789@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`);
+mongoose.connect(connectionString);
 
 let db = mongoose.connection;
 

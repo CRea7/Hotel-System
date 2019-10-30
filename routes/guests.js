@@ -4,9 +4,9 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 
-
-mongoose.connect('mongodb+srv://CRea7:BoJack1789@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority');
-
+const connectionString = 'mongodb+srv://CRea7:BoJack1789@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority';
+mongoose.connect(connectionString);
+//test git
 let db = mongoose.connection;
 
 db.on('error', function (err) {
