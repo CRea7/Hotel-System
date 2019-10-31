@@ -4,7 +4,7 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 
-const connectionString = `mongodb+srv://$(process.env.USER):$(process.env.PASS)@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`;
+const connectionString = "mongodb://localhost:27017/hoteldb";
 mongoose.connect(connectionString);
 
 let db = mongoose.connection;

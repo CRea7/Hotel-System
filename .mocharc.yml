@@ -1,0 +1,4 @@
+file:
+  - test/functional/api/guestTest.js
+require: '@babel/register'
+timeout: 10000

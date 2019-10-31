@@ -6,7 +6,7 @@ let mongoose = require('mongoose');
 require('dotenv')
     .config();
 
-const connectionString = `mongodb+srv://$(process.env.USER):$(process.env.PASS)@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`;
+const connectionString = "mongodb://localhost:27017/hoteldb";
 console.log(connectionString);
 
 mongoose.connect(connectionString);
