@@ -8,7 +8,7 @@ const _ = require("lodash");
 
 let server;
 let mongod;
-let db, validID;
+let db, validID, validID2;
 
 // let guest = new Guest();
 // guest.name = "Tommy blue";
@@ -195,5 +195,38 @@ describe("Guestss", () => {
                 });
         })
     });
+
+    describe("POST /guests", () => {
+        it("should return confirmation message and update datastore", () => {
+            const guest = {
+                name: "Tommy rad",
+                people: 4,
+                roomno: 50,
+                breakfast: true,
+                roomtype: "family",
+            };
+            return request(server)
+                .post("/guests")
+                .send(guest)
+                .expect(200)
+                .then(res => {
+                    expect(res.body.message).equals("Guest added!");
+                    //validID2 = res.body.data._id;
+                })
+        });
+        after(() => {
+            return request(server)
+                .get(`/guests`)
+                .expect(200)
+                .then(res => {
+                    expect(res.body[2]).to.have.property("name", "Tommy rad");
+                    expect(res.body[2]).to.have.property("people", 4);
+                    expect(res.body[2]).to.have.property("roomno", 50);
+                    expect(res.body[2]).to.have.property("breakfast", 'true');
+                    expect(res.body[2]).to.have.property("roomtype", "family");
+                    expect(res.body[2]).to.have.property("check", "waiting");
+                })
+        })
+    })
 
 });
