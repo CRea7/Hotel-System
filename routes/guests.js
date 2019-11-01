@@ -27,7 +27,7 @@ router.findAll = (req, res) => {
 
         res.send(JSON.stringify(guests,null,5));
     });
-}
+};
 
 router.findOne = (req, res) => {
 
@@ -35,14 +35,14 @@ router.findOne = (req, res) => {
 
     guests.find({"_id": req.params.id}, function (err,guest) {
         if (err)
-            res.send(err);
+            res.json({message: "Guest not found"});
         // return a suitable error message
         else
             res.send(JSON.stringify(guest, null, 5));
 
         // return the donation
     });
-}
+};
 
 router.deleteGuest = (req, res) => {
 
@@ -58,7 +58,7 @@ router.deleteCheckOut = (req, res) => {
 
     guests.remove({"check":"out"}, function (err){
        if (err)
-           res.send(err);
+           res.json({message: 'no guests to delete'})
         else
             res.json({message: 'Guests deleted!'});
     });
