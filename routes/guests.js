@@ -81,8 +81,9 @@ router.addGuest = (req, res) => {
                 res.json({ message: 'Guest not added!' });
                 else
                 res.json({ message: 'Guest added!' });
+                //res.data(guest);
             });
-}
+};
 
 function getByValue(array, id) {
     var result  = array.filter(function(obj){return obj.id == id;} );
