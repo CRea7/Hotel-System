@@ -39,7 +39,7 @@ router.findEmptyRooms = (req, res) => {
 
         res.send(JSON.stringify(rooms,null,5));
     });
-}
+};
 
 router.roomReady = (req, res) => {
 
@@ -50,18 +50,18 @@ router.roomReady = (req, res) => {
 
     Rooms.findById({"_id": req.params.id}, function (err,room) {
        if (err)
-           res.send(err);
+           res.json({message: "could not ready room"});
         else {
           room.state ="Ready";
            room.save(function (err) {
                if (err)
                    res.json({message: 'could not empty room'});
-           })
+           });
            res.json({message: 'room Ready!'});
        }
 
     });
-}
+};
 
 router.roomMaintain = (req, res) => {
 
@@ -72,7 +72,7 @@ router.roomMaintain = (req, res) => {
 
     Rooms.findById({"_id": req.params.id}, function (err,room) {
         if (err)
-            res.send(err);
+            res.json({message: "room not found"});
         else {
             room.state ="Maintain";
             room.save(function (err) {
@@ -91,7 +91,7 @@ router.findOne = (req, res) => {
 
     Rooms.find({"_id": req.params.id}, function (err,room) {
         if (err)
-            res.send(err);
+            res.json({message: "room could not be found!"});
         // return a suitable error message
         else
             res.send(JSON.stringify(room, null, 5));
