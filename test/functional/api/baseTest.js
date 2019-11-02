@@ -9,7 +9,7 @@ const _ = require("lodash");
 
 let server;
 let mongod;
-let db, validID, validID2;
+let db, validID, validID2, validID3;
 
 describe("base", () => {
     before(async () => {
@@ -30,15 +30,15 @@ describe("base", () => {
         }
     });
 
-    after(async () => {
-        try {
-            await db.dropDatabase();
-            await mongod.stop();
-            await server.close();
-        } catch (error) {
-            console.log(error)
-        }
-    });
+    // after(async () => {
+    //     try {
+    //         await db.dropDatabase();
+    //         await mongod.stop();
+    //         await server.close();
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // });
 
     beforeEach(async () => {
         try {
@@ -48,7 +48,7 @@ describe("base", () => {
             room.roomtype = "family";
             room.capacity = 5;
             room.guest = "Tommy blue";
-            room.state = "occupied";
+            room.state = "Occupied";
             await room.save();
             let room2 = new Room();
             room2.number = 2;
@@ -61,8 +61,8 @@ describe("base", () => {
             room3.number = 3;
             room3.roomtype = "single";
             room3.capacity = 2;
-            room3.guest = "empty";
-            room3.state = "Ready";
+            room3.guest = "Bojack Horseman";
+            room3.state = "Occupied";
             await room3.save();
             room = await Room.findOne({roomtype: "double"});
             validID = room._id;
@@ -84,8 +84,19 @@ describe("base", () => {
             guest2.roomtype = "double";
             guest2.check = "out";
             await guest2.save();
+            let guest3 = new Guest();
+            guest3.name = "Bojack Horseman";
+            guest3.people = 1;
+            guest3.roomno = 3;
+            guest3.breakfast = false;
+            guest3.roomtype = "single";
+            guest3.check = "in";
+            await guest3.save();
+
             guest = await Guest.findOne({people: 2});
             validID2 = guest._id;
+            guest = await Guest.findOne({name: "Bojack Horseman"});
+            validID3 = guest._id;
         } catch (error) {
             console.log(error)
         }
@@ -105,7 +116,7 @@ describe("base", () => {
             });
         });
         describe("When the id is not valid", () => {
-            it("should not find guest and assign no room", done => {
+            it("should find guest and assign no room", done => {
                 request(server)
                     .put(`/rooms/maintain/${validID}`)
                     .expect("Content-Type", /json/)
@@ -131,6 +142,34 @@ describe("base", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body.message).equals("guest could not be found!");
+                        done(err);
+                    });
+            });
+        });
+    });
+
+
+    describe("PUT /rooms/checkout/:id", () => {
+        describe("When the id is valid and guest is in room", () => {
+            it("should check guest out of room", done => {
+                request(server)
+                    .put(`/rooms/checkout/${validID3}`)
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.message).equals("Guest checked out");
+                        done(err);
+                    });
+            });
+        });
+        describe("When the id is not valid", () => {
+            it("should not find guest and assign no room", done => {
+                request(server)
+                    .put(`/rooms/checkout/9999`)
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.message).equals("guest could not be found");
                         done(err);
                     });
             });
