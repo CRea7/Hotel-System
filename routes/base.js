@@ -32,7 +32,7 @@ router.AssignRoom = (req, res) => {
 
     Guests.findById({"_id": req.params.id}, function (err, guest) {
         if (err)
-            res.send(err);
+            res.json({message: "guest could not be found!"});
         else {
             //res.json({message: 'found guest'});
             type = guest.roomtype;
@@ -53,7 +53,7 @@ router.AssignRoom = (req, res) => {
                             room.save(function (err) {
                                 if (err)
                                     res.json({message: 'could not occupied room'});
-                            })
+                            });
                             guest.roomno = roomno;
                             guest.check = "in";
                             guest.save(function (err) {

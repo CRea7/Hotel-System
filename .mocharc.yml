@@ -1,5 +1,6 @@
 file:
   - test/functional/api/guestTest.js
   - test/functional/api/roomTest.js
+  - test/functional/api/baseTest.js
 require: '@babel/register'
 timeout: 10000
