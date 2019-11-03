@@ -1,5 +1,5 @@
-const expect = require('chai').expect;
-const express = require('express');
+const expect = require("chai").expect;
+const express = require("express");
 const request = require("supertest");
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const Guest = require("../../../models/guests");
@@ -24,9 +24,9 @@ describe("base", () => {
                 useUnifiedTopology: true
             });
             server = require("../../../bin/www");
-            db = mongoose.connection
+            db = mongoose.connection;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -98,7 +98,7 @@ describe("base", () => {
             guest = await Guest.findOne({name: "Bojack Horseman"});
             validID3 = guest._id;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 

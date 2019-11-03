@@ -1,5 +1,5 @@
-const expect = require('chai').expect;
-const express = require('express');
+const expect = require("chai").expect;
+const express = require("express");
 const request = require("supertest");
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const Guest = require("../../../models/guests");
@@ -8,7 +8,7 @@ const _ = require("lodash");
 
 let server;
 let mongod;
-let db, validID, validID2;
+let db, validID;
 
 // let guest = new Guest();
 // guest.name = "Tommy blue";
@@ -39,9 +39,9 @@ describe("Guestss", () => {
                 useUnifiedTopology: true
             });
             server = require("../../../bin/www");
-            db = mongoose.connection
+            db = mongoose.connection;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -51,7 +51,7 @@ describe("Guestss", () => {
             await mongod.stop();
             await server.close();
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -77,7 +77,7 @@ describe("Guestss", () => {
             guest = await Guest.findOne({people: 2});
             validID = guest._id;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -92,9 +92,9 @@ describe("Guestss", () => {
                     .end((err, res) => {
                         expect(res.body[0]).to.have.property("people", 2);
                         expect(res.body[0]).to.have.property("name", "Chad Warren");
-                        done(err)
-                    })
-            })
+                        done(err);
+                    });
+            });
         });
         describe("when the id is invalid", () => {
             it("should return the NOT found message", done => {
@@ -105,10 +105,10 @@ describe("Guestss", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body.message).equals("Guest not found");
-                        done(err)
-                    })
-            })
-        })
+                        done(err);
+                    });
+            });
+        });
     });
     describe("GET /guests", () => {
         it("should GET all the guests", done => {
@@ -124,19 +124,19 @@ describe("Guestss", () => {
                         expect(res.body[0]).to.have.property("name", "Tommy blue");
                         expect(res.body[0]).to.have.property("people", 5);
                         expect(res.body[0]).to.have.property("roomno", 0);
-                        expect(res.body[0]).to.have.property("breakfast", 'true');
+                        expect(res.body[0]).to.have.property("breakfast", "true");
                         expect(res.body[0]).to.have.property("roomtype", "family");
                         expect(res.body[0]).to.have.property("check", "waiting");
 
                         expect(res.body[1]).to.have.property("name", "Chad Warren");
                         expect(res.body[1]).to.have.property("people", 2);
                         expect(res.body[1]).to.have.property("roomno", 45);
-                        expect(res.body[1]).to.have.property("breakfast", 'true');
+                        expect(res.body[1]).to.have.property("breakfast", "true");
                         expect(res.body[1]).to.have.property("roomtype", "double");
                         expect(res.body[1]).to.have.property("check", "out");
-                        done()
+                        done();
                     } catch (e) {
-                        done(e)
+                        done(e);
                     }
                 });
         });
@@ -146,7 +146,7 @@ describe("Guestss", () => {
         describe("when the id is valid", () => {
             it("should DELETE the selected guest", done => {
                 request(server)
-                   .delete(`/guests/${validID}`)
+                    .delete(`/guests/${validID}`)
                     .set("Accept", "application/json")
                     .expect("Content-Type", /json/)
                     .expect(200)
@@ -154,7 +154,7 @@ describe("Guestss", () => {
                         //expect(Guest).to.have.length(1);
                         expect(res.body.message).equals("Guest deleted!");
                         done(err);
-                });
+                    });
             });
         });
         describe("when the id is invalid", () => {
@@ -167,9 +167,9 @@ describe("Guestss", () => {
                     .end((err, res) => {
                         expect(res.body.message).equals("Guest not deleted!");
                         done(err)
-                    })
-            })
-        })
+                    });
+            });
+        });
     });
 
     describe("DELETE /guests/remove", () => {
@@ -212,7 +212,7 @@ describe("Guestss", () => {
                 .then(res => {
                     expect(res.body.message).equals("Guest added!");
                     //validID2 = res.body.data._id;
-                })
+                });
         });
         after(() => {
             return request(server)
