@@ -1,10 +1,8 @@
-const expect = require('chai').expect;
-const express = require('express');
+const expect = require("chai").expect;
 const request = require("supertest");
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const Room = require("../../../models/rooms");
 const mongoose = require("mongoose");
-const _ = require("lodash");
 
 let server;
 let mongod;
@@ -23,9 +21,9 @@ describe("Roomss", () => {
                 useUnifiedTopology: true
             });
             server = require("../../../bin/www");
-            db = mongoose.connection
+            db = mongoose.connection;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -35,7 +33,7 @@ describe("Roomss", () => {
             await mongod.stop();
             await server.close();
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -66,7 +64,7 @@ describe("Roomss", () => {
             room = await Room.findOne({guest: "Tommy blue"});
             validID = room._id;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     });
 
@@ -83,25 +81,25 @@ describe("Roomss", () => {
                         expect(res.body.length).to.equal(3);
                         expect(res.body[0]).to.have.property("number", 1);
                         expect(res.body[0]).to.have.property("roomtype", "family");
-                        expect(res.body[0]).to.have.property("capacity", '5');
-                        expect(res.body[0]).to.have.property("guest", 'Tommy blue');
+                        expect(res.body[0]).to.have.property("capacity", "5");
+                        expect(res.body[0]).to.have.property("guest", "Tommy blue");
                         expect(res.body[0]).to.have.property("state", "occupied");
 
                         expect(res.body[1]).to.have.property("number", 2);
                         expect(res.body[1]).to.have.property("roomtype", "double");
-                        expect(res.body[1]).to.have.property("capacity", '2');
-                        expect(res.body[1]).to.have.property("guest", 'empty');
+                        expect(res.body[1]).to.have.property("capacity", "2");
+                        expect(res.body[1]).to.have.property("guest", "empty");
                         expect(res.body[1]).to.have.property("state", "Ready");
 
                         expect(res.body[2]).to.have.property("number", 3);
                         expect(res.body[2]).to.have.property("roomtype", "single");
-                        expect(res.body[2]).to.have.property("capacity", '2');
-                        expect(res.body[2]).to.have.property("guest", 'empty');
+                        expect(res.body[2]).to.have.property("capacity", "2");
+                        expect(res.body[2]).to.have.property("guest", "empty");
                         expect(res.body[2]).to.have.property("state", "Ready");
 
-                        done()
+                        done();
                     } catch (e) {
-                        done(e)
+                        done(e);
                     }
                 });
         });
@@ -121,19 +119,19 @@ describe("Roomss", () => {
 
                         expect(res.body[0]).to.have.property("number", 2);
                         expect(res.body[0]).to.have.property("roomtype", "double");
-                        expect(res.body[0]).to.have.property("capacity", '2');
-                        expect(res.body[0]).to.have.property("guest", 'empty');
+                        expect(res.body[0]).to.have.property("capacity", "2");
+                        expect(res.body[0]).to.have.property("guest", "empty");
                         expect(res.body[0]).to.have.property("state", "Ready");
 
                         expect(res.body[1]).to.have.property("number", 3);
                         expect(res.body[1]).to.have.property("roomtype", "single");
-                        expect(res.body[1]).to.have.property("capacity", '2');
-                        expect(res.body[1]).to.have.property("guest", 'empty');
+                        expect(res.body[1]).to.have.property("capacity", "2");
+                        expect(res.body[1]).to.have.property("guest", "empty");
                         expect(res.body[1]).to.have.property("state", "Ready");
 
-                        done()
+                        done();
                     } catch (e) {
-                        done(e)
+                        done(e);
                     }
                 });
         });
@@ -154,7 +152,7 @@ describe("Roomss", () => {
         describe("When the id is not valid", () => {
             it("should change state of room to empty", done => {
                 request(server)
-                    .put(`/rooms/ready/9999`)
+                    .put("/rooms/ready/9999")
                     .expect("Content-Type", /json/)
                     .expect(200)
                     .end((err, res) => {
@@ -181,7 +179,7 @@ describe("Roomss", () => {
         describe("When the id is not valid", () => {
             it("should change state of room to empty", done => {
                 request(server)
-                    .put(`/rooms/maintain/9999`)
+                    .put("/rooms/maintain/9999")
                     .expect("Content-Type", /json/)
                     .expect(200)
                     .end((err, res) => {
@@ -203,9 +201,9 @@ describe("Roomss", () => {
                     .end((err, res) => {
                         expect(res.body[0]).to.have.property("number", 1);
                         expect(res.body[0]).to.have.property("guest", "Tommy blue");
-                        done(err)
-                    })
-            })
+                        done(err);
+                    });
+            });
         });
         describe("when the id is invalid", () => {
             it("should return the NOT found message", done => {
@@ -216,10 +214,10 @@ describe("Roomss", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body.message).equals("room could not be found!");
-                        done(err)
-                    })
-            })
-        })
+                        done(err);
+                    });
+            });
+        });
     });
 
     describe("DELETE /rooms/:id", () => {
@@ -232,9 +230,9 @@ describe("Roomss", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body.message).to.equal("Room deleted!");
-                        done(err)
-                    })
-            })
+                        done(err);
+                    });
+            });
         });
         describe("when the id is invalid", () => {
             it("should return the NOT found message", done => {
@@ -245,9 +243,9 @@ describe("Roomss", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body.message).equals("Room not deleted!");
-                        done(err)
-                    })
-            })
-        })
+                        done(err);
+                    });
+            });
+        });
     });
 });

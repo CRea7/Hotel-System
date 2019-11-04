@@ -1,15 +1,13 @@
 const expect = require("chai").expect;
-const express = require("express");
 const request = require("supertest");
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const Guest = require("../../../models/guests");
 const Room = require("../../../models/rooms");
 const mongoose = require("mongoose");
-const _ = require("lodash");
 
 let server;
 let mongod;
-let db, validID, validID2, validID3;
+let db,validID, validID2, validID3;
 
 describe("base", () => {
     before(async () => {
@@ -137,7 +135,7 @@ describe("base", () => {
         describe("When the id is not valid", () => {
             it("should not find guest and assign no room", done => {
                 request(server)
-                    .put(`/rooms/assign/9999`)
+                    .put("/rooms/assign/9999")
                     .expect("Content-Type", /json/)
                     .expect(200)
                     .end((err, res) => {
@@ -165,7 +163,7 @@ describe("base", () => {
         describe("When the id is not valid", () => {
             it("should not find guest and assign no room", done => {
                 request(server)
-                    .put(`/rooms/checkout/9999`)
+                    .put("/rooms/checkout/9999")
                     .expect("Content-Type", /json/)
                     .expect(200)
                     .end((err, res) => {

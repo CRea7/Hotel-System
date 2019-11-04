@@ -1,10 +1,8 @@
 const expect = require("chai").expect;
-const express = require("express");
 const request = require("supertest");
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const Guest = require("../../../models/guests");
 const mongoose = require("mongoose");
-const _ = require("lodash");
 
 let server;
 let mongod;
@@ -166,7 +164,7 @@ describe("Guestss", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body.message).equals("Guest not deleted!");
-                        done(err)
+                        done(err);
                     });
             });
         });
@@ -176,7 +174,7 @@ describe("Guestss", () => {
         describe("when the guest deletes successfully", () => {
             it("should DELETE guests who are checked out", done => {
                 request(server)
-                    .delete(`/guests/remove`)
+                    .delete("/guests/remove")
                     .set("Accept", "application/json")
                     .expect("Content-Type", /json/)
                     .expect(200)
@@ -188,12 +186,12 @@ describe("Guestss", () => {
         });
         after(() => {
             return request(server)
-                .get(`/guests`)
+                .get("/guests")
                 .expect(200)
                 .then(res => {
                     expect(res.body).to.have.length(1);
                 });
-        })
+        });
     });
 
     describe("POST /guests", () => {
@@ -216,17 +214,17 @@ describe("Guestss", () => {
         });
         after(() => {
             return request(server)
-                .get(`/guests`)
+                .get("/guests")
                 .expect(200)
                 .then(res => {
                     expect(res.body[2]).to.have.property("name", "Tommy rad");
                     expect(res.body[2]).to.have.property("people", 4);
                     expect(res.body[2]).to.have.property("roomno", 50);
-                    expect(res.body[2]).to.have.property("breakfast", 'true');
+                    expect(res.body[2]).to.have.property("breakfast", "true");
                     expect(res.body[2]).to.have.property("roomtype", "family");
                     expect(res.body[2]).to.have.property("check", "waiting");
-                })
-        })
-    })
+                });
+        });
+    });
 
 });
