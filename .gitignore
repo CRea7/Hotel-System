@@ -2,3 +2,5 @@
 /node_modules
 /dist
 /test/database
+/coverage
+.nyc_output
