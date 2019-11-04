@@ -159,6 +159,7 @@ PUT /rooms/checkout/9999 200 1.173 ms - 38
 ## Extra features.
 
 while using the basic eslint configuration i was running into some problems I didnt like so I looked into the settings and changed them based on my preferences.
+I also customised the eslint configureation to ignore some of the test blocks as it was falsely flagging them.
 
 
 [datamodel]: ./img/datamodel.png
