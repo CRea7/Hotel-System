@@ -5,6 +5,7 @@ Name: Conor Rea / 20076065
 ## Overview.
 This web app is designed to be used by staff in a hotel enviroment. It allows the staff to manage the rooms and guests while also keeping track of the status of each room. when someone approaches the staff they can add them to the system and they can be assigned a room which the system will find based on the amount of people and what kind of room they want. Once the system finds them a room that room is no longer available and they are considered checked in. When they have finished their stay the system will check them out and assign the room for cleaning. Once the room is clean the staff can make the room available again through the system so it can be assigned to a new guest. the room can also be sent for maintenence if there is a problem which will make that room univailable. once a few guests have been checked out the can all be delted from the system in one go instead of having to delete each person who has checked out.
 
+#### GitHub link : https://github.com/CRea7/AgileTest
 ## API endpoints.
 
  + GET /guests              -Get all guests.
@@ -27,6 +28,10 @@ This web app is designed to be used by staff in a hotel enviroment. It allows th
 
 The database in its current state is very simple only making use of 2 models. A guest can stay in many rooms but only 1 room can house 1 guest so when a guest is checked in they're assigned to that room and no other.
 
+Each guest has a check option which can have 3 different states which are in, out and waiting. if a guest is waiting they have not been assigned a room. If a guest is checked in they have been assigned a room. If the check is out the user has been checked out of the room and the room state is set to cleaning and guest empty.
+Each guest also specify a room type and will only be checked into a room of that type.
+
+When a guest is checked into a room the guests name is assigned to the room so the staff know who is in what room. the room also has a room type and capacity so the system can see if the room is eligible for the guest that is trying to be checked in.
 #### Guests
 ~~~
 [
