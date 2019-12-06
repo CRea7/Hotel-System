@@ -53,6 +53,7 @@ app.put('/rooms/checkout/:id', baseRouter.CheckoutRoom);
 
 //user routes
 app.post('/users', userRouter.createUser);
+app.post('/users/login', usersRouter.login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

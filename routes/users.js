@@ -41,29 +41,86 @@ router.createUser = async (req, res) => {
 
 };
 
+function PassCheck(storedPass, enteredPass){
+
+    try {
+        console.log(storedPass);
+        console.log(enteredPass);
+        bcrypt.compare(enteredPass,storedPass)
+            .then(match => {
+                if (!match) {
+                    return(false);
+                }else{
+                    return(true);
+                }
+    });
+    }catch(e){
+        return (e);
+    }
+}
+
 router.login = (req, res) => {
 
     res.setHeader("content-Type", "application/json");
+    let usercheck = false;
+    var fuser;
 
-    var user = new user;
-    user.name = req.body.name;
-    user.password = req.body.password;
-    //this is alternative to easier code
-
-    Rooms.find({"name": req.body.name}, function (err,User) {
+    users.find(function(err, users) {
         if (err)
-            res.json({message: "could not ready room"});
-        else {
-            var value = User.password;
+            res.send(err);
 
-            var decipher = crypto.createDecipher(algorithm,password)
-            var dec = decipher.update(value,'hex','utf8')
-            dec += decipher.final('utf8');
+        users.forEach(function (user) {
+            if(user.name === req.body.name) {
+                usercheck = true;
+                fuser = user;
+                //console.log(user.name);
+            }
+        });
 
-            res.json({message: "room Ready!"});
+        if(usercheck === false)
+        {
+            return res.status(400).send("Cannot find user");
+        }else{
+
+            try {
+                bcrypt.compare(req.body.password,fuser.password)
+                    .then(match => {
+                        if (!match) {
+                            res.send("shid")
+                        }else{
+                            res.send("all good")
+                        }
+                    });
+            }catch(e){
+                return (e);
+            }
         }
-
     });
+
+    //console.log(usercheck);
+
+
+    // var user = users();
+    // user.name = req.body.name;
+    //
+    // const user1 = users.find(user => user.name = req.body.name);
+    // if (user1 == null)
+    // {
+    //     return res.status(400).send("Cannot find user");
+    // }
+    // try {
+    //     if(await bcrypt.compare(req.body.password,user.password))
+    //     {
+    //         res.send("LoggedIn");
+    //     }else
+    //     {
+    //         res.send("LogInError");
+    //     }
+    // }catch(e){
+    //     res.status(500).send();
+    // }
+
+
 };
 
 
