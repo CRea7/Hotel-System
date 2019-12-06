@@ -3,7 +3,6 @@ let express = require("express");
 let router = express.Router();
 let mongoose = require("mongoose");
 
-
 const connectionString = "mongodb://localhost:27017/hoteldb";
 mongoose.connect(connectionString);
 
