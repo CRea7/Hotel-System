@@ -6,6 +6,8 @@ let mongoose = require("mongoose");
 let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 
+let pubToken = null;
+
 const connectionString = "mongodb://localhost:27017/hoteldb";
 mongoose.connect(connectionString);
 
@@ -60,27 +62,14 @@ function PassCheck(storedPass, enteredPass){
         return (e);
     }
 }
-
-router.authenticateToken = ((req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    console.log(token);
-    console.log(process.env.accessToken);
-    if(token == null) res.sendStatus(401);
-
-    jwt.verify(token, process.env.accessToken, (err, user) => {
-       if(err) return res.sendStatus(403);
-       req.user = user;
-        next()
-    });
-});
-
 router.verifyToken = ((req, res, next) => {
-    res.setHeader('Content-Type', 'application/json');
-    const token = req.headers.authorization || req.headers['authenticate'];
+
+    const token = pubToken;
+    //const token = req.headers.authorization || req.headers['authenticate'];
+    //const token = req.body.token || req.query.token || req.headers['x-access-token'];
+    console.log(req.headers);
     //const token = "eyJhbGciOiJIUzI1NiJ9.Q29ub3IgUmVh.dXGBA0iExY-w0WuBHTheDY6Ppkz_cmR33drP0CBx-J8"
-    console.log(token);
-    console.log(process.env.ACCESS_TOKEN);
+    //console.log(process.env.ACCESS_TOKEN);
     if (!token)
         return res.status(403).send({ auth: false, message: 'No token provided.' });
 
@@ -124,9 +113,13 @@ router.login = (req, res) => {
                         if (!match) {
                             res.send("shid")
                         }else{
-                            console.log(process.env.ACCESS_TOKEN);
-                            const accessToken = jwt.sign(fuser.name, process.env.ACCESS_TOKEN);
-                            res.status(200).send({ message: 'Login Successful', token: accessToken });
+                            //console.log(process.env.ACCESS_TOKEN);
+                            const token = jwt.sign(fuser.name, process.env.ACCESS_TOKEN);
+
+                            pubToken = token;
+                            //req.headers.authorization = token;
+                            //req.headers['authorization'] = token;
+                            res.status(200).send({ message: 'Login Successful', token: token });
                         }
                     });
             }catch(e){

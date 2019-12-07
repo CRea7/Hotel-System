@@ -30,29 +30,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.get('/guests', usersRouter.verifyToken, guestsRouter.findAll);
-app.get('/guests/:id', guestsRouter.findOne);
+app.get('/guests/:id',usersRouter.verifyToken, guestsRouter.findOne);
 
-app.post('/guests', guestsRouter.addGuest);
+app.post('/guests',usersRouter.verifyToken, guestsRouter.addGuest);
 
-app.delete('/guests/remove', guestsRouter.deleteCheckOut);
-app.delete('/guests/:id', guestsRouter.deleteGuest);
+app.delete('/guests/remove',usersRouter.verifyToken, guestsRouter.deleteCheckOut);
+app.delete('/guests/:id',usersRouter.verifyToken, guestsRouter.deleteGuest);
 
 //room routes
-app.get('/rooms', roomsRouter.findAll);
-app.get('/rooms/empty', roomsRouter.findEmptyRooms);
-app.get('/rooms/:id', roomsRouter.findOne);
+app.get('/rooms',usersRouter.verifyToken, roomsRouter.findAll);
+app.get('/rooms/empty',usersRouter.verifyToken, roomsRouter.findEmptyRooms);
+app.get('/rooms/:id',usersRouter.verifyToken, roomsRouter.findOne);
 
-app.put('/rooms/ready/:id', roomsRouter.roomReady);
-app.put('/rooms/maintain/:id', roomsRouter.roomMaintain);
+app.put('/rooms/ready/:id',usersRouter.verifyToken, roomsRouter.roomReady);
+app.put('/rooms/maintain/:id',usersRouter.verifyToken, roomsRouter.roomMaintain);
 
-app.delete('/rooms/:id', roomsRouter.deleteRoom);
+app.delete('/rooms/:id',usersRouter.verifyToken, roomsRouter.deleteRoom);
 
 //base routes
-app.put('/rooms/assign/:id', baseRouter.AssignRoom);
-app.put('/rooms/checkout/:id', baseRouter.CheckoutRoom);
+app.put('/rooms/assign/:id',usersRouter.verifyToken, baseRouter.AssignRoom);
+app.put('/rooms/checkout/:id',usersRouter.verifyToken, baseRouter.CheckoutRoom);
 
 //user routes
-app.post('/users', userRouter.createUser);
+app.post('/users',usersRouter.verifyToken, userRouter.createUser);
 app.post('/users/login', usersRouter.login);
 
 // catch 404 and forward to error handler
