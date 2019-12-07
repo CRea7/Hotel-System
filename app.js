@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.get('/guests', guestsRouter.findAll);
+app.get('/guests', usersRouter.verifyToken, guestsRouter.findAll);
 app.get('/guests/:id', guestsRouter.findOne);
 
 app.post('/guests', guestsRouter.addGuest);

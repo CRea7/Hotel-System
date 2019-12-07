@@ -1,8 +1,10 @@
+require('dotenv').config();
 let users = require("../models/users");
 let express = require("express");
 let router = express.Router();
 let mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+let bcrypt = require("bcrypt");
+let jwt = require("jsonwebtoken");
 
 const connectionString = "mongodb://localhost:27017/hoteldb";
 mongoose.connect(connectionString);
@@ -59,6 +61,40 @@ function PassCheck(storedPass, enteredPass){
     }
 }
 
+router.authenticateToken = ((req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    console.log(token);
+    console.log(process.env.accessToken);
+    if(token == null) res.sendStatus(401);
+
+    jwt.verify(token, process.env.accessToken, (err, user) => {
+       if(err) return res.sendStatus(403);
+       req.user = user;
+        next()
+    });
+});
+
+router.verifyToken = ((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json');
+    const token = req.headers.authorization || req.headers['authenticate'];
+    //const token = "eyJhbGciOiJIUzI1NiJ9.Q29ub3IgUmVh.dXGBA0iExY-w0WuBHTheDY6Ppkz_cmR33drP0CBx-J8"
+    console.log(token);
+    console.log(process.env.ACCESS_TOKEN);
+    if (!token)
+        return res.status(403).send({ auth: false, message: 'No token provided.' });
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, function(err, decoded) {
+        if (err)
+            return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+
+        // if everything good, save to request for use in other routes
+        req.userId = decoded.id;
+        console.log("Token Okay");
+        next();
+    });
+});
+
 router.login = (req, res) => {
 
     res.setHeader("content-Type", "application/json");
@@ -88,7 +124,9 @@ router.login = (req, res) => {
                         if (!match) {
                             res.send("shid")
                         }else{
-                            res.send("all good")
+                            console.log(process.env.ACCESS_TOKEN);
+                            const accessToken = jwt.sign(fuser.name, process.env.ACCESS_TOKEN);
+                            res.status(200).send({ message: 'Login Successful', token: accessToken });
                         }
                     });
             }catch(e){
