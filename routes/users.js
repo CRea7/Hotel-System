@@ -67,9 +67,11 @@ router.verifyToken = ((req, res, next) => {
     const token = pubToken;
     //const token = req.headers.authorization || req.headers['authenticate'];
     //const token = req.body.token || req.query.token || req.headers['x-access-token'];
-    console.log(req.headers);
-    if (!token)
-        return res.status(403).send({ auth: false, message: 'No token provided.' });
+    //console.log(token);
+    if (!token) {
+        //return res.redirect('/users/login');
+        return res.status(403).send({auth: false, message: 'No token provided.'});
+    }
 
     jwt.verify(token, process.env.ACCESS_TOKEN, function(err, decoded) {
         if (err)
@@ -87,6 +89,8 @@ router.login = (req, res) => {
     res.setHeader("content-Type", "application/json");
     let usercheck = false;
     var fuser;
+
+    //console.log(req.body.password);
 
     users.find(function(err, users) {
         if (err)
@@ -106,6 +110,7 @@ router.login = (req, res) => {
         }else{
 
             try {
+                //console.log(req.body.password);
                 bcrypt.compare(req.body.password,fuser.password)
                     .then(match => {
                         if (!match) {
@@ -117,6 +122,7 @@ router.login = (req, res) => {
                             pubToken = token;
                             //req.headers.authorization = token;
                             //req.headers['authorization'] = token;
+                            console.log(token);
                             res.status(200).send({ message: 'Login Successful', token: token });
                         }
                     });
