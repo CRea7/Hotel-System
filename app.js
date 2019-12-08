@@ -55,6 +55,8 @@ app.put('/rooms/checkout/:id',usersRouter.verifyToken, baseRouter.CheckoutRoom);
 app.post('/users',usersRouter.verifyToken, userRouter.createUser);
 app.post('/users/login', usersRouter.login);
 
+app.put('/users/logout', usersRouter.logout);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

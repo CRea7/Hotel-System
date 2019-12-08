@@ -68,8 +68,6 @@ router.verifyToken = ((req, res, next) => {
     //const token = req.headers.authorization || req.headers['authenticate'];
     //const token = req.body.token || req.query.token || req.headers['x-access-token'];
     console.log(req.headers);
-    //const token = "eyJhbGciOiJIUzI1NiJ9.Q29ub3IgUmVh.dXGBA0iExY-w0WuBHTheDY6Ppkz_cmR33drP0CBx-J8"
-    //console.log(process.env.ACCESS_TOKEN);
     if (!token)
         return res.status(403).send({ auth: false, message: 'No token provided.' });
 
@@ -127,31 +125,11 @@ router.login = (req, res) => {
             }
         }
     });
+};
 
-    //console.log(usercheck);
-
-
-    // var user = users();
-    // user.name = req.body.name;
-    //
-    // const user1 = users.find(user => user.name = req.body.name);
-    // if (user1 == null)
-    // {
-    //     return res.status(400).send("Cannot find user");
-    // }
-    // try {
-    //     if(await bcrypt.compare(req.body.password,user.password))
-    //     {
-    //         res.send("LoggedIn");
-    //     }else
-    //     {
-    //         res.send("LogInError");
-    //     }
-    // }catch(e){
-    //     res.status(500).send();
-    // }
-
-
+router.logout = (req, res) => {
+    pubToken = null;
+    res.status(200).send({ message: 'Logout Successful'});
 };
 
 
