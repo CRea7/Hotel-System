@@ -7,6 +7,10 @@
     "start": "cross-env NODE_ENV=dev PORT=3001 node dist/bin/www",
     "build": "npm-run-all test clean compile start",
     "compile": "babel ./ --out-dir dist/ --ignore ./node_modules,./test --copy-files",
+    "compile:models": "babel ./models --out-dir dist/models",
+    "compile:routes": "babel ./routes --out-dir dist/routes ",
+    "compile:app": "babel app.js --out-dir dist/",
+    "compile:copy": "cp -r ./node_modules/ dist/node_modules && cp -r bin/ dist/bin && cp -r views/ dist/views",
     "compile:all": "npm-run-all compile:models compile:routes compile:app compile:copy",
     "clean": "rimraf ./dist && mkdir dist"
   },
