@@ -8,7 +8,8 @@ let jwt = require("jsonwebtoken");
 
 let pubToken = null;
 
-const connectionString = "mongodb://localhost:27017/hoteldb";
+//const connectionString = "mongodb://localhost:27017/hoteldb";
+const connectionString = `mongodb+srv://${process.env.USERSAREM}:${process.env.PASS}@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`;
 mongoose.connect(connectionString);
 
 let db = mongoose.connection;

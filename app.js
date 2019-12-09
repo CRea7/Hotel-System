@@ -52,7 +52,7 @@ app.put('/rooms/assign/:id',usersRouter.verifyToken, baseRouter.AssignRoom);
 app.put('/rooms/checkout/:id',usersRouter.verifyToken, baseRouter.CheckoutRoom);
 
 //user routes
-app.post('/users',usersRouter.verifyToken, userRouter.createUser);
+app.post('/users', userRouter.createUser);
 app.post('/users/login', usersRouter.login);
 
 app.put('/users/logout', usersRouter.logout);
