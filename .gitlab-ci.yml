@@ -6,7 +6,7 @@ cache:
     - node_modules/
 
 variables:
-  NODE_ENV: 'test
+  NODE_ENV: 'test'
 
 # Pipeline:
 stages:
