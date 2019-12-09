@@ -3,6 +3,8 @@ const request = require("supertest");
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const Guest = require("../../../models/guests");
 const mongoose = require("mongoose");
+require("dotenv")
+    .config();
 
 let server;
 let mongod;
@@ -34,7 +36,7 @@ describe("Guestss", () => {
             });
             // Async Trick - this ensures the database is created before
             // we try to connect to it or start the server
-            const connString = await mongod.getConnectionString();
+            const connString = `mongodb+srv://${process.env.USERSAREM}:${process.env.PASS}@cluster0-ikkfh.mongodb.net/test?retryWrites=true&w=majority`;
 
             await mongoose.connect(connString, {
                 useNewUrlParser: true,
