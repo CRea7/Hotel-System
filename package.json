@@ -2,6 +2,9 @@
   "name": "hotel-system",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "12.13.0"
+  },
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --exit",
     "start": "cross-env NODE_ENV=dev PORT=3001 node dist/bin/www",
