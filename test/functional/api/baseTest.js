@@ -15,7 +15,7 @@ describe("base", () => {
             mongod = new MongoMemoryServer();
             // Async Trick - this ensures the database is created before
             // we try to connect to it or start the server
-            const connString = await mongod.getConnectionString();
+            const connString = "mongodb://localhost:27017/hoteldb";
 
             await mongoose.connect(connString, {
                 useNewUrlParser: true,

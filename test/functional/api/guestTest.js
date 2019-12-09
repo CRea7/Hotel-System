@@ -27,7 +27,11 @@ let db, validID;
 describe("Guestss", () => {
     before(async () => {
         try {
-            mongod = new MongoMemoryServer();
+            mongod = new MongoMemoryServer({
+                instance: {
+                    dbName: "donationsdb" // by default generate random dbName
+                }
+            });
             // Async Trick - this ensures the database is created before
             // we try to connect to it or start the server
             const connString = await mongod.getConnectionString();
