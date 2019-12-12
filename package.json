@@ -5,7 +5,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --exit",
     "start": "cross-env NODE_ENV=dev PORT=3001 node dist/bin/www",
-    "build": "npm-run-all clean compile start",
+    "build": "npm-run-all clean compile:all start",
     "compile:models": "babel ./models --out-dir dist/models",
     "compile:routes": "babel ./routes --out-dir dist/routes ",
     "compile:app": "babel app.js --out-dir dist/",
