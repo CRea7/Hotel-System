@@ -51,6 +51,7 @@ app.delete('/rooms/:id',usersRouter.verifyToken, roomsRouter.deleteRoom);
 app.put('/rooms/assign/:id',usersRouter.verifyToken, baseRouter.AssignRoom);
 app.put('/rooms/checkout/:id',usersRouter.verifyToken, baseRouter.CheckoutRoom);
 
+app.post('/rooms' ,usersRouter.verifyToken, roomsRouter.addroom);
 //user routes
 app.post('/users', userRouter.createUser);
 app.post('/users/login', usersRouter.login);

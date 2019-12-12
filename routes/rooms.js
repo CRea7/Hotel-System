@@ -82,6 +82,26 @@ router.roomMaintain = (req, res) => {
     });
 };
 
+router.addroom = (req, res) => {
+
+    res.setHeader("Content-Type", "application/json");
+
+    var room = new Rooms();
+
+    room.number = req.body.number;
+    room.roomtype = req.body.roomtype;
+    room.capacity = req.body.capacity;
+    room.guest = req.body.guest;
+    room.state = req.body.state;
+
+    room.save(function(err) {
+        if (err)
+            res.json({ message: "Guest not added!" });
+        else
+            res.json({ message: "Guest added!" });
+    });
+};
+
 router.findOne = (req, res) => {
 
     res.setHeader("Content-Type", "application/json");
