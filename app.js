@@ -29,29 +29,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.get('/guests', /*usersRouter.verifyToken,*/ guestsRouter.findAll);
-app.get('/guests/:id',/*usersRouter.verifyToken,*/ guestsRouter.findOne);
+app.get('/guests', usersRouter.verifyToken, guestsRouter.findAll);
+app.get('/guests/:id',usersRouter.verifyToken, guestsRouter.findOne);
 
-app.post('/guests',/*usersRouter.verifyToken,*/ guestsRouter.addGuest);
+app.post('/guests',usersRouter.verifyToken, guestsRouter.addGuest);
 
-app.delete('/guests/remove',/*usersRouter.verifyToken,*/ guestsRouter.deleteCheckOut);
-app.delete('/guests/:id',/*usersRouter.verifyToken,*/ guestsRouter.deleteGuest);
+app.delete('/guests/remove',usersRouter.verifyToken, guestsRouter.deleteCheckOut);
+app.delete('/guests/:id',usersRouter.verifyToken, guestsRouter.deleteGuest);
 
 //room routes
-app.get('/rooms',/*usersRouter.verifyToken,*/ roomsRouter.findAll);
-app.get('/rooms/empty',/*usersRouter.verifyToken,*/ roomsRouter.findEmptyRooms);
-app.get('/rooms/:id',/*usersRouter.verifyToken,*/ roomsRouter.findOne);
+app.get('/rooms',usersRouter.verifyToken, roomsRouter.findAll);
+app.get('/rooms/empty',usersRouter.verifyToken, roomsRouter.findEmptyRooms);
+app.get('/rooms/:id',usersRouter.verifyToken, roomsRouter.findOne);
 
-app.put('/rooms/ready/:id',/*usersRouter.verifyToken,*/ roomsRouter.roomReady);
-app.put('/rooms/maintain/:id',/*usersRouter.verifyToken,*/ roomsRouter.roomMaintain);
+app.put('/rooms/ready/:id',usersRouter.verifyToken, roomsRouter.roomReady);
+app.put('/rooms/maintain/:id',usersRouter.verifyToken, roomsRouter.roomMaintain);
 
-app.delete('/rooms/:id',/*usersRouter.verifyToken,*/ roomsRouter.deleteRoom);
+app.delete('/rooms/:id',usersRouter.verifyToken, roomsRouter.deleteRoom);
 
 //base routes
-app.put('/rooms/assign/:id',/*usersRouter.verifyToken,*/ baseRouter.AssignRoom);
-app.put('/rooms/checkout/:id',/*usersRouter.verifyToken,*/ baseRouter.CheckoutRoom);
+app.put('/rooms/assign/:id',usersRouter.verifyToken, baseRouter.AssignRoom);
+app.put('/rooms/checkout/:id',usersRouter.verifyToken, baseRouter.CheckoutRoom);
 
-app.post('/rooms' ,/*usersRouter.verifyToken,*/roomsRouter.addroom);
+app.post('/rooms' ,usersRouter.verifyToken,roomsRouter.addroom);
 //user routes
 app.post('/users', userRouter.createUser);
 app.post('/users/login', usersRouter.login);
