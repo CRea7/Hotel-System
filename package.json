@@ -1,7 +1,10 @@
 {
   "name": "hotel-system",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "12.13.0"
+  },
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --exit",
     "start": "node ./dist/bin/www",
@@ -11,7 +14,8 @@
     "compile:app": "babel app.js --out-dir dist/",
     "compile:copy": "cp -r ./node_modules/ dist/node_modules && cp -r bin/ dist/bin && cp -r views/ dist/views",
     "compile:all": "npm-run-all compile:models compile:routes compile:app compile:copy",
-    "clean": "rimraf ./dist && mkdir dist"
+    "clean": "rimraf ./dist && mkdir dist",
+    "postinstall": "rimraf ./dist && npm run compile:all"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
