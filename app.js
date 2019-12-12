@@ -74,7 +74,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get('/', function(req, res){
-  res.redirect('/todo');
-});
 module.exports = app;
