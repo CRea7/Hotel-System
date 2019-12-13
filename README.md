@@ -161,6 +161,10 @@ PUT /rooms/checkout/9999 200 1.173 ms - 38
 
 ~~~
 
+## Api links
+
+staging link:  https://hotel-api-staging.herokuapp.com/  
+Production link: https://hotel-api-prod.herokuapp.com/
 ## Extra features.
 
 while using the basic eslint configuration i was running into some problems I didnt like so I looked into the settings and changed them based on my preferences.
